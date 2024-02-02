@@ -5,13 +5,34 @@ mod prelude {
     pub const SCREEN_WIDTH: i32 = 80;
     pub const SCREEN_HEIGHT: i32 = 50;
     pub use crate::map::*;
-} 
-
-use crate::prelude::*;
-const NUM_TILES: usize = (SCREEN_WIDTH * SCREEN_HEIGHT) as usize;
-
-fn main() {
-    println!("Hello, world!");
 }
 
+use prelude::*;
+const NUM_TILES: usize = (SCREEN_WIDTH * SCREEN_HEIGHT) as usize;
 
+
+struct State {
+    map: Map,
+}
+
+impl State {
+    fn new() -> Self {
+        State {
+            map: Map::new()
+        }
+    }
+}
+impl GameState for State {
+    fn tick(&mut self, ctx: &mut BTerm) {
+        ctx.cls();
+        self.map.render(ctx);
+    }
+}
+fn main() -> BError {
+    let context = BTermBuilder::simple80x50()
+        .with_title("Dungeon crawler")
+        .with_fps_cap(30.0)
+        .build()?;
+
+    main_loop(context, State::new())    
+}
