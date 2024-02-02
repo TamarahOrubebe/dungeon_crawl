@@ -1,38 +1,42 @@
-mod map;
+#![warn(clippy::pedantic)]
 
-mod prelude {
-    pub use bracket_lib::prelude::*;
-    pub const SCREEN_WIDTH: i32 = 80;
+// START: prelude
+mod map; 
+
+mod prelude { 
+    pub use bracket_lib::prelude::*; 
+    pub const SCREEN_WIDTH: i32 = 80; 
     pub const SCREEN_HEIGHT: i32 = 50;
-    pub use crate::map::*;
+    pub use crate::map::*; 
 }
 
-use prelude::*;
-const NUM_TILES: usize = (SCREEN_WIDTH * SCREEN_HEIGHT) as usize;
+use prelude::*; 
+                // END: prelude
 
-
+// START: mapstate
 struct State {
     map: Map,
 }
 
 impl State {
     fn new() -> Self {
-        State {
-            map: Map::new()
-        }
+        Self { map: Map::new() }
     }
 }
+
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
         ctx.cls();
         self.map.render(ctx);
     }
 }
+
 fn main() -> BError {
     let context = BTermBuilder::simple80x50()
-        .with_title("Dungeon crawler")
-        .with_fps_cap(30.0)
+        .with_title("Dungeon Crawler")
+        .with_fps_cap(30.0)// <callout id="co.bdc.fps_cap" />
         .build()?;
 
-    main_loop(context, State::new())    
+    main_loop(context, State::new())
 }
+// END: mapstate
