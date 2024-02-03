@@ -26,7 +26,7 @@ impl Player {
 
     // START: player_update
     // START: player_update_iflet
-    pub fn update(&mut self, ctx: &mut BTerm, map: &Map, camera: &Camera) {
+    pub fn update(&mut self, ctx: &mut BTerm, map: &Map, camera: &mut Camera) {
         if let Some(key) = ctx.key {
             let delta = match key {
                 VirtualKeyCode::Left => Point::new(-1, 0),
