@@ -21,16 +21,32 @@ pub struct Map {
 pub fn map_idx(x: i32, y: i32) -> usize {
     ((y * SCREEN_WIDTH) + x) as usize
 }
+// END: map_idx
 
 // START: mapconstruct
 impl Map {
-// END: map_idx
+
 pub fn new() -> Self {
         Self {
             tiles: vec![TileType::Floor; NUM_TILES],
         }
     }
     // END: mapconstruct
+
+
+    // START: inbounds
+    pub fn in_bounds(&self, point : Point) -> bool {
+        point.x >= 0 && point.x < SCREEN_WIDTH 
+            && point.y >= 0 && point.y < SCREEN_HEIGHT
+    }
+    // END: inbounds
+
+    // START: can_enter
+    pub fn can_enter_tile(&self, point : Point) -> bool {
+        self.in_bounds(point) 
+            && self.tiles[map_idx(point.x, point.y)]==TileType::Floor
+    }
+    // END: can_enter
 
     // START: maprender
     pub fn render(&self, ctx: &mut BTerm) {
@@ -51,24 +67,7 @@ pub fn new() -> Self {
                 }
             }
         }
-    }
-
-    pub fn in_bound(&self, point: Point) -> bool {
-        point.x >= 0 && point.x < SCREEN_WIDTH
-        && point.y >= 0 && point.y < SCREEN_HEIGHT
-    }
-
-    pub fn can_enter_tile(&self, point: Point) -> bool {
-        self.in_bound(point)
-        && self.tiles[map_idx(point.x, point.y)] == TileType::Floor
-    }
-
-    pub fn try_idx(&self, point: Point) -> Option<usize> {
-        if !self.in_bound(point) {
-            None
-        } else {
-            Some(map_idx(point.x, point.y))
-        }
-    }
+    } 
     // END: maprender
+    
 }
