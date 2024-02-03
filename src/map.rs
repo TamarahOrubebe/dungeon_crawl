@@ -52,5 +52,10 @@ pub fn new() -> Self {
             }
         }
     }
+
+    pub fn in_bound(&self, point: Point) -> bool {
+        point.x >= 0 && point.x < SCREEN_WIDTH
+        && point.y >= 0 && point.y < SCREEN_HEIGHT
+    }
     // END: maprender
 }
