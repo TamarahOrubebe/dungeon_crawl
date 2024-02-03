@@ -2,14 +2,12 @@
 use crate::prelude::*;
 
 pub struct Player {
-    pub position: Point
+    pub position: Point,
 }
 
 impl Player {
     pub fn new(position: Point) -> Self {
-        Self {
-            position
-        }
+        Self { position }
     }
     // END: player
 
@@ -27,14 +25,14 @@ impl Player {
 
     // START: player_update
     // START: player_update_iflet
-    pub fn update(&mut self, ctx: &mut BTerm, map : &Map) {
+    pub fn update(&mut self, ctx: &mut BTerm, map: &Map) {
         if let Some(key) = ctx.key {
             let delta = match key {
                 VirtualKeyCode::Left => Point::new(-1, 0),
                 VirtualKeyCode::Right => Point::new(1, 0),
                 VirtualKeyCode::Up => Point::new(0, -1),
                 VirtualKeyCode::Down => Point::new(0, 1),
-                _ => Point::zero()
+                _ => Point::zero(),
             };
             // END: player_update_iflet
             // START: player_update_newpos
